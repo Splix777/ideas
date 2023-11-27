@@ -50,6 +50,7 @@ const tryFormPost = async () => {
       mode: "cors",
       credentials: "include",
       headers: {
+        'Referer': 'https://localhost:8443',
         "Content-Type": "application/json",
         "X-CSRFToken": token,
       },

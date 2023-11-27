@@ -61,9 +61,9 @@ if os.environ.get('DJANGO_DEBUG') == 'True':
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -159,6 +159,8 @@ CSRF_COOKIE_SAMESITE = None
 CSRF_COOKIE_SECURE = True  # If your site is served over HTTPS
 CSRF_COOKIE_SAMESITE = None
 CSRF_COOKIE_HTTPONLY = True
+# CORS_CHECK_REFERER = False
+
 
 AUTH_USER_MODEL = 'userauth.CustomUser'
 
@@ -170,6 +172,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
+    'Referer',
     'access-control-allow-origin',
     'authorization',
     'content-type',

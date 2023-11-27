@@ -32,6 +32,7 @@ def validate_jwt_token_view(request):
 
     return JsonResponse({'error': 'Only POST requests are allowed'}, status=400)
 
+@csrf_exempt
 def signup_view(request):
     if request.method == 'POST':
         try:

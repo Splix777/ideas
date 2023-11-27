@@ -131,6 +131,7 @@ const tryFormPost = async () => {
     mode: "cors",
     credentials: "include",
     headers: {
+      'Referer': 'https://localhost:8443',
       "Content-Type": "application/json",
       "X-CSRFToken": token,
     },
@@ -139,6 +140,7 @@ const tryFormPost = async () => {
       fullname: fullname,
       email: email,
       password: password,
+      is_superuser: false
     }),
   })
     .then((response) => response.json())
