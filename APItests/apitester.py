@@ -46,8 +46,8 @@ def signup_user(username, password, fullname, email, cookie=None):
 
     response = requests.request("POST", signup_url, json=payload, headers=headers, cookies=cookie, verify=False)
 
-    print("Response Content:", response.content)
-    print("Response Status Code:", response.status_code)
+    # print("Response Content:", response.content)
+    # print("Response Status Code:", response.status_code)
 
     jwt_token = response.json().get("token")
     if jwt_token:
