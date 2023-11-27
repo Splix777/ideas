@@ -4,7 +4,7 @@ const tryLoginFormPost = async (data) => {
   const password = "AUTH0_USER_NO_PASSWORD";
   try {
     const token = await getCsrfToken();
-    const response = await fetch("http://localhost:8000/api/user/login/", {
+    const response = await fetch("https://localhost:8000/api/user/login/", {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -46,7 +46,7 @@ const tryFormPost = async (data) => {
 
   token = await getCsrfToken();
 
-  fetch("http://localhost:8000/api/user/signup/", {
+  fetch("https://localhost:8000/api/user/signup/", {
     method: "POST",
     mode: "cors",
     credentials: "include",
@@ -77,7 +77,7 @@ const tryFormPost = async (data) => {
 };
 
 const getInfoMe = async (username) => {
-  const response = await fetch(`http://localhost:8000/info-me/${username}/`, {
+  const response = await fetch(`https://localhost:8000/info-me/${username}/`, {
     method: "GET",
     mode: "cors",
     credentials: "include",

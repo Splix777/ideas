@@ -1,6 +1,6 @@
 const getCsrfToken = async () => {
   try {
-    const response = await fetch("http://localhost:8000/api/user/csrftoken/", {
+    const response = await fetch("https://localhost:8000/api/user/csrftoken/", {
       method: "GET",
       credentials: "include",
     });

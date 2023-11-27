@@ -45,7 +45,7 @@ const tryFormPost = async () => {
   }
   try {
     const token = await getCsrfToken();
-    const response = await fetch("http://localhost:8000/api/user/login/", {
+    const response = await fetch("https://localhost:8000/api/user/login/", {
       method: "POST",
       mode: "cors",
       credentials: "include",

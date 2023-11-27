@@ -126,7 +126,7 @@ const tryFormPost = async () => {
 
   token = await getCsrfToken();
 
-  fetch("http://localhost:8000/api/user/signup/", {
+  fetch("https://localhost:8000/api/user/signup/", {
     method: "POST",
     mode: "cors",
     credentials: "include",
