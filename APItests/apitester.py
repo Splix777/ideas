@@ -18,7 +18,7 @@ BASE_URL = "https://localhost:8000/api/"  # Replace with your actual base URL
 def get_cookie():
     # Fetch CSRF token
     csrf_token_url = BASE_URL + "user/csrftoken/"
-    csrf_token_response = requests.get(csrf_token_url)
+    csrf_token_response = requests.get(csrf_token_url, verify=False)
     print(csrf_token_response.cookies)
 
     return csrf_token_response.cookies
@@ -30,6 +30,7 @@ def signup_user(username, password, fullname, email, cookie=None):
     # Signup URL and data
     signup_url = BASE_URL + "user/signup/"
     headers = {
+    'Referer': 'https://localhost:8000',
     "Content-Type": "application/json",
     "X-CSRFToken": csrf_token,
     }
@@ -43,7 +44,10 @@ def signup_user(username, password, fullname, email, cookie=None):
 
     # Make the signup request
 
-    response = requests.request("POST", signup_url, json=payload, headers=headers, cookies=cookie)
+    response = requests.request("POST", signup_url, json=payload, headers=headers, cookies=cookie, verify=False)
+
+    print("Response Content:", response.content)
+    print("Response Status Code:", response.status_code)
 
     jwt_token = response.json().get("token")
     if jwt_token:
@@ -71,13 +75,13 @@ def make_api_call(endpoint, method="GET", data=None, jwt_token=None, cookies=Non
     # print(f"Making {method} request to {url} with data: {data} and headers: {headers} with JWT token: {jwt_token}")
 
     if method == "GET":
-        response = requests.get(url, json=data, headers=headers, cookies=cookies, params=payload)
+        response = requests.get(url, json=data, headers=headers, cookies=cookies, params=payload, verify=False)
     elif method == "POST":
-        response = requests.post(url, json=data, headers=headers, cookies=cookies, params=payload)
+        response = requests.post(url, json=data, headers=headers, cookies=cookies, params=payload, verify=False)
     elif method == "PUT":
-        response = requests.put(url, json=data, headers=headers, cookies=cookies, params=payload)
+        response = requests.put(url, json=data, headers=headers, cookies=cookies, params=payload, verify=False)
     elif method == "DELETE":
-        response = requests.delete(url, headers=headers, cookies=cookies, params=payload)
+        response = requests.delete(url, headers=headers, cookies=cookies, params=payload, verify=False)
     else:
         print(f"Unsupported HTTP method: {method}")
         return False
