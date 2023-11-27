@@ -41,4 +41,6 @@ python3 manage.py migrate
 python3 manage.py createsuperuser --username="$POSTGRES_USER" --email=admin@example.com --noinput
 
 # Start the Django development server
+# python3 manage.py runserver 0.0.0.0:8000
 python3 manage.py runsslserver 0.0.0.0:8000
+
