@@ -16,7 +16,6 @@ python3 -m pip install --upgrade pip setuptools wheel
 pip install --upgrade pip
 pip install -r requirements.txt
 
-
 # Create a Django project
 if [ ! -d "$PROJECT_DIR" ]; then
     django-admin startproject server
@@ -40,7 +39,21 @@ python3 manage.py migrate
 # Create a superuser (replace 'your_superuser_password' with the actual environment variable name)
 python3 manage.py createsuperuser --username="$POSTGRES_USER" --email=admin@example.com --noinput
 
-# Start the Django development server
-# python3 manage.py runserver 0.0.0.0:8000
-python3 manage.py runsslserver 0.0.0.0:8000
+# Define a function for graceful shutdown
+function graceful_shutdown() {
+    echo "Received SIGTERM. Shutting down gracefully..."
+    kill -TERM $PID
+    wait $PID
+    echo "Shutdown complete."
+    exit 0
+}
 
+# Trap SIGTERM for graceful shutdown
+trap graceful_shutdown SIGTERM
+
+# Start the Django development server
+python3 manage.py runsslserver 0.0.0.0:8000 &
+PID=$!
+
+# Wait for the process to finish
+wait $PID
