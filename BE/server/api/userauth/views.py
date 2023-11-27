@@ -72,6 +72,7 @@ def signup_view(request):
 def signupIntra(request):
 	pass
 
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         try:
