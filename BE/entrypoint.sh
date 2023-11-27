@@ -27,8 +27,11 @@ fi
 # Print current working directory for debugging
 cd server
 
-# Make and Apply database migrations
+# Make and Apply database migration
 python3 manage.py makemigrations
+python3 manage.py makemigrations api
+python3 manage.py makemigrations tournament
+python3 manage.py makemigrations userauth
 python3 manage.py migrate
 
 # Collect static files
