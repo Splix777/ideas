@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  django:
+    container_name: 'django'
+    build:
+      context: ./BE/  # Updated path to BE folder
+      dockerfile: Dockerfile
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py migrate && daphne server.asgi:application -u 0.0.0.0 -p 8000"
+    env_file:
+      - .env
+    volumes:
+      - ./BE:/app/  # Mount your Django app code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - ft_t
+
+  db:
+    image: postgres:latest
+    container_name: 'db'
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ft_t
+
+  nginx:
+    container_name: 'nginx'
+    build:
+      context: ./nginx  # Updated path to NGINX folder
+      dockerfile: Dockerfile
+    volumes:
+      - ./Front:/usr/share/nginx/html # Mount your Nginx configuration file
+    ports:
+      - "8080:80"
+      - "8443:443"
+    depends_on:
+      - django
+    networks:
+      - ft_t
+
+networks:
+  ft_t:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
